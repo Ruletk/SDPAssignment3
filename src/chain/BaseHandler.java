@@ -4,7 +4,7 @@ public abstract class BaseHandler implements IHandler {
     protected IHandler nextHandler;
 
     public BaseHandler() {
-        nextHandler = new EmptyHandler();
+        setNextHandler(new EmptyHandler());
     }
 
     @Override

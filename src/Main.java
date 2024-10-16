@@ -1,4 +1,5 @@
 import chain.*;
+import command.*;
 import iterator.Task;
 import iterator.TaskList;
 
@@ -7,7 +8,8 @@ import java.util.Iterator;
 public class Main {
     public static void main(String[] args) {
 //        testChain();
-        testTaskIterator();
+//        testTaskIterator();
+        testCommand();
     }
 
     public static void testChain() {
@@ -40,5 +42,23 @@ public class Main {
         for (Task task : taskList) {
             System.out.println(task);
         }
+    }
+
+    public static void testCommand() {
+        String user = "user1";
+
+        ICommand command1 = new PaymentCommand(user, "PayPal");
+        ICommand command2 = new NotificationCommand(user, "You have make a payment");
+        ICommand command3 = new LogCommand("Payment", "Payment has been made by " + user);
+
+        command1.execute();
+        command2.execute();
+        command3.execute();
+
+//        or by CommandExecutor
+        System.out.println("\nCommandExecutor:");
+        CommandExecutor executor = new CommandExecutor();
+        executor.executeCommand(command1);
+        executor.executeCommands(command2, command3);
     }
 }

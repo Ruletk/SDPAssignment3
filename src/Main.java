@@ -2,6 +2,7 @@ import chain.*;
 import command.*;
 import iterator.Task;
 import iterator.TaskList;
+import mediator.*;
 
 import java.util.Iterator;
 
@@ -9,7 +10,8 @@ public class Main {
     public static void main(String[] args) {
 //        testChain();
 //        testTaskIterator();
-        testCommand();
+//        testCommand();
+        testMediator();
     }
 
     public static void testChain() {
@@ -60,5 +62,17 @@ public class Main {
         CommandExecutor executor = new CommandExecutor();
         executor.executeCommand(command1);
         executor.executeCommands(command2, command3);
+    }
+
+    public static void testMediator() {
+        TaskNotificationService notificationService = new TaskNotificationService();
+        TaskLogService logService = new TaskLogService();
+
+        ITaskMediator mediator = new TaskMediatorImpl(notificationService, logService);
+        TaskService taskService = new TaskService(mediator);
+
+        taskService.createTask("1");
+        System.out.println();
+        taskService.completeTask("1");
     }
 }
